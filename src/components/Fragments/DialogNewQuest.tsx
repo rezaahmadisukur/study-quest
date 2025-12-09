@@ -10,9 +10,16 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from "../ui/form";
 import { Textarea } from "../ui/textarea";
-import { ChevronDownIcon, Zap } from "lucide-react";
+import { CalendarIcon, Zap } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -22,9 +29,54 @@ import {
 } from "../ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Calendar } from "../ui/calendar";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { format } from "date-fns";
+import { Label } from "../ui/label";
+import zod from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const formSchema = zod.object({
+  questName: zod.string().min(1, { message: "Quest Name is required" }),
+  description: zod.string().min(1, { message: "Descripton is required" }),
+  category: zod.string().min(1, { message: "Category is required" }),
+  priority: zod.string().min(1, { message: "Priority is required" }),
+  deadline: zod.string().min(1, { message: "Deadline is required" })
+});
 
 export function DialogNewQuest() {
-  const form = useForm();
+  const form = useForm<zod.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      questName: "",
+      description: "",
+      category: "",
+      priority: "",
+      deadline: ""
+    }
+  });
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [time, setTime] = useState<string>("12:00");
+  const [open, setOpen] = useState(false);
+
+  const handleAddTask = (values: zod.infer<typeof formSchema>) => {
+    console.log(values);
+    alert("OK");
+    form.reset();
+  };
+
+  const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTime(e.target.value);
+    if (date) {
+      const [hours, minutes] = e.target.value.split(":");
+      const newDate = new Date(date);
+      newDate.setHours(
+        Number.parseInt(hours, 10),
+        Number.parseInt(minutes, 10)
+      );
+      setDate(newDate);
+    }
+  };
   return (
     <Dialog>
       <div className="mt-10 flex justify-center">
@@ -34,9 +86,12 @@ export function DialogNewQuest() {
           </Button>
         </DialogTrigger>
       </div>
-      <Form {...form}>
-        <form>
-          <DialogContent className="sm:max-w-4xl bg-white/10 backdrop-blur-md border border-white/20 text-muted">
+      <DialogContent
+        className="sm:max-w-4xl bg-white/10 backdrop-blur-md border border-white/20 text-muted overflow-auto"
+        aria-description=""
+      >
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(handleAddTask)}>
             <DialogHeader>
               <DialogTitle className="flex gap-2 items-center">
                 <Zap className="text-yellow-500" />
@@ -60,6 +115,7 @@ export function DialogNewQuest() {
                         className="rounded-sm bg-white/10 backdrop-blur-md border border-white/20 placeholder:text-muted"
                       />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -76,6 +132,7 @@ export function DialogNewQuest() {
                         className="rounded-sm bg-white/10 backdrop-blur-md border border-white/20 placeholder:text-muted"
                       />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -95,6 +152,7 @@ export function DialogNewQuest() {
                           className="rounded-sm bg-white/10 backdrop-blur-md border border-white/20 placeholder:text-muted"
                         />
                       </FormControl>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -105,12 +163,12 @@ export function DialogNewQuest() {
                     <FormItem>
                       <FormLabel className="text-xs">Priority Level</FormLabel>
                       <FormControl>
-                        <Select>
+                        <Select
+                          value={field.value}
+                          onValueChange={field.onChange}
+                        >
                           <SelectTrigger className="w-full rounded-sm bg-white/10 backdrop-blur-md border border-white/20 placeholder:text-muted">
-                            <SelectValue
-                              placeholder="Select Priority"
-                              {...field}
-                            />
+                            <SelectValue placeholder="Select Priority" />
                           </SelectTrigger>
                           <SelectContent>
                             <SelectItem value="low">Low - 15 XP</SelectItem>
@@ -121,6 +179,7 @@ export function DialogNewQuest() {
                           </SelectContent>
                         </Select>
                       </FormControl>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -131,28 +190,53 @@ export function DialogNewQuest() {
                     <FormItem>
                       <FormLabel className="text-xs">Deadline</FormLabel>
                       <FormControl>
-                        <Popover>
-                          <PopoverTrigger
-                            asChild
-                            className="w-full rounded-sm bg-white/10 backdrop-blur-md border border-white/20 placeholder:text-muted"
-                          >
+                        <Popover open={open} onOpenChange={setOpen}>
+                          <PopoverTrigger asChild>
                             <Button
-                              variant={"outline"}
-                              className="justify-between"
+                              className={cn(
+                                "w-[280px] justify-start text-left font-normal rounded-sm bg-white/10 backdrop-blur-md border border-white/20 placeholder:text-muted",
+                                !date && "text-muted-foreground"
+                              )}
+                              variant="outline"
                             >
-                              Select date
-                              <ChevronDownIcon />
+                              <CalendarIcon className="mr-2 h-4 w-4" />
+                              {date ? (
+                                `${format(date, "PPP")} at ${time}`
+                              ) : (
+                                <span>Pick a date and time</span>
+                              )}
                             </Button>
                           </PopoverTrigger>
-                          <PopoverContent>
-                            <Calendar
-                              mode="single"
-                              captionLayout="dropdown"
-                              {...field}
-                            />
+                          <PopoverContent align="center" className="w-auto p-0">
+                            <div className="divide-y overflow-hidden bg-background">
+                              <Calendar
+                                mode="single"
+                                onSelect={(selectedDate) => {
+                                  field.onChange(selectedDate?.toISOString());
+                                  setDate(selectedDate);
+                                  setOpen(false);
+                                }}
+                                selected={
+                                  field.value
+                                    ? new Date(field.value)
+                                    : undefined
+                                }
+                              />
+                              <div className="space-y-2 p-4">
+                                <Label htmlFor="time">Time</Label>
+                                <Input
+                                  className="w-full"
+                                  id="time"
+                                  onChange={(e) => handleTimeChange(e)}
+                                  type="time"
+                                  value={time}
+                                />
+                              </div>
+                            </div>
                           </PopoverContent>
                         </Popover>
                       </FormControl>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -173,9 +257,9 @@ export function DialogNewQuest() {
                 </Button>
               </DialogClose>
             </DialogFooter>
-          </DialogContent>
-        </form>
-      </Form>
+          </form>
+        </Form>
+      </DialogContent>
     </Dialog>
   );
 }

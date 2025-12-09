@@ -1,8 +1,28 @@
-import { Flame, Lock, Shell, Trophy } from "lucide-react";
+import {
+  Circle,
+  Clock,
+  Flame,
+  Funnel,
+  Lock,
+  Pencil,
+  Shell,
+  Trash2,
+  Trophy
+} from "lucide-react";
 import ExperientLevel from "./components/Fragments/ExperientLevel";
 import Header from "./components/Fragments/Header";
 import { Card } from "./components/ui/card";
 import { DialogNewQuest } from "./components/Fragments/DialogNewQuest";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "./components/ui/select";
+import { Badge } from "./components/ui/badge";
+import { Progress } from "./components/ui/progress";
+import { Button } from "./components/ui/button";
 
 const App = () => {
   return (
@@ -125,6 +145,119 @@ const App = () => {
           {/* CARD - Achievements */}
 
           <DialogNewQuest />
+
+          <Card className="bg-white/10 backdrop-blur-md border border-white/20 px-5 mt-10">
+            <div className="flex gap-5 items-center">
+              {/* 1 */}
+              <div className="flex gap-2 items-center">
+                <Funnel className="size-4 text-neutral-50" />
+                <h1 className="text-sm text-neutral-50 font-semibold">
+                  Filter :{" "}
+                </h1>
+              </div>
+              {/* 2 */}
+              <div className="flex gap-2 items-center">
+                <h1 className="text-xs text-neutral-50">Category : </h1>
+                <Select>
+                  <SelectTrigger className="bg-white/10 backdrop-blur-md border border-white/20 w-[180px]">
+                    <SelectValue
+                      placeholder="All Categories"
+                      className="placeholder:text-neutral-50"
+                    />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="light">Light</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              {/* 3 */}
+              <div className="flex gap-2 items-center">
+                <h1 className="text-xs text-neutral-50">Priority : </h1>
+                <Select>
+                  <SelectTrigger className="bg-white/10 backdrop-blur-md border border-white/20 w-[180px]">
+                    <SelectValue
+                      placeholder="All Priorities"
+                      className="placeholder:text-neutral-50"
+                    />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="low">Low Priority</SelectItem>
+                    <SelectItem value="medium">Medium Priority</SelectItem>
+                    <SelectItem value="high">High Priority</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </Card>
+
+          <div className="mt-10">
+            <h1 className="text-2xl font-md text-muted">
+              ✅ Completed Quests (1)
+            </h1>
+            <div className="grid grid-cols-1 gap-5">
+              <Card className="border-green-500/70 bg-white/10 backdrop-blur-md border px-5 mt-10">
+                <div className="flex gap-5">
+                  {/* Circle Checkbox */}
+                  <div>
+                    <Circle className="w-6 h-6 text-purple-300 hover:text-purple-100 hover:scale-105 transition-all duration-300" />
+                  </div>
+                  {/* Element Tast */}
+                  <div className="w-full">
+                    {/* head */}
+                    <div className="flex justify-between w-full">
+                      <div className="flex flex-col gap-1">
+                        <div className="flex gap-1 items-center">
+                          <h1 className="flex gap-1 text-muted text-lg">
+                            Web Programming
+                          </h1>
+                          <Badge className="bg-purple-500/20 text-purple-300 text-[10px] py-0 px-3">
+                            web-prog
+                          </Badge>
+                        </div>
+                        {/* Detail */}
+                        <p className="text-[12px] text-muted-foreground">
+                          Web Comic
+                        </p>
+                      </div>
+                      <div>
+                        <Badge className="bg-red-500/20 text-red-300 border-red-500/50">
+                          Low Priority . 15 XP
+                        </Badge>
+                      </div>
+                    </div>
+                    {/* Progress deadline */}
+                    <div className="mt-5">
+                      <div className="flex gap-1 items-center text-muted ">
+                        <Clock className="size-3" />
+                        <p className="text-[10px]">10d 4h remaining</p>
+                      </div>
+                      <div className="mt-3">
+                        <Progress value={55} />
+                      </div>
+                    </div>
+                    {/* Date Deadline */}
+                    <div className="mt-5 flex  justify-between items-center">
+                      {/* Due Date */}
+                      <div>
+                        <p className="text-xs text-muted-foreground">
+                          Due: 10/13/2025, 12:00:00 AM
+                        </p>
+                      </div>
+                      {/* Action (Edit and Delete) Button */}
+                      <div className="flex gap-5">
+                        <Button className="bg-green-500/20 text-green-300 border-green-500/70 w-6 h-6 hover:bg-green-500/50 transition-all duration-300 cursor-pointer">
+                          <Pencil className="size-3" />
+                        </Button>
+                        <Button className="bg-red-500/20 text-red-300 border-red-500/70 w-6 h-6 hover:bg-red-500/50 transition-all duration-300 cursor-pointer">
+                          <Trash2 className="size-3" />
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </div>
         </main>
       </div>
     </div>
