@@ -2,6 +2,7 @@ import { Flame, Lock, Shell, Trophy } from "lucide-react";
 import ExperientLevel from "./components/Fragments/ExperientLevel";
 import Header from "./components/Fragments/Header";
 import { Card } from "./components/ui/card";
+import { DialogNewQuest } from "./components/Fragments/DialogNewQuest";
 
 const App = () => {
   return (
@@ -122,6 +123,8 @@ const App = () => {
             </div>
           </Card>
           {/* CARD - Achievements */}
+
+          <DialogNewQuest />
         </main>
       </div>
     </div>
