@@ -23,8 +23,20 @@ import {
 import { Badge } from "./components/ui/badge";
 import { Progress } from "./components/ui/progress";
 import { Button } from "./components/ui/button";
+import { useSelector } from "react-redux";
+import type { RootState } from "./redux/store";
+import { useEffect } from "react";
+import { cn } from "./lib/utils";
+import type { addTaskType } from "./redux/slices/taskSlice";
 
 const App = () => {
+  const tasks = useSelector((state: RootState) => state.tasks.data);
+
+  useEffect(() => {
+    localStorage.setItem("studyTasks", JSON.stringify(tasks));
+  }, [tasks]);
+
+  // console.log(tasks.sort());
   return (
     <div className="min-h-screen bg-linear-to-br from-indigo-900 via-purple-900 to-pink-900">
       <div className="max-w-5xl mx-auto py-20">
@@ -194,68 +206,94 @@ const App = () => {
             <h1 className="text-2xl font-md text-muted">
               ✅ Completed Quests (1)
             </h1>
-            <div className="grid grid-cols-1 gap-5">
-              <Card className="border-green-500/70 bg-white/10 backdrop-blur-md border px-5 mt-10">
-                <div className="flex gap-5">
-                  {/* Circle Checkbox */}
-                  <div>
-                    <Circle className="w-6 h-6 text-purple-300 hover:text-purple-100 hover:scale-105 transition-all duration-300" />
-                  </div>
-                  {/* Element Tast */}
-                  <div className="w-full">
-                    {/* head */}
-                    <div className="flex justify-between w-full">
-                      <div className="flex flex-col gap-1">
-                        <div className="flex gap-1 items-center">
-                          <h1 className="flex gap-1 text-muted text-lg">
-                            Web Programming
-                          </h1>
-                          <Badge className="bg-purple-500/20 text-purple-300 text-[10px] py-0 px-3">
-                            web-prog
-                          </Badge>
+            <div className="grid grid-cols-1 gap-5 mt-10">
+              {tasks.length > 0 &&
+                tasks.map((task: addTaskType) => (
+                  <Card
+                    key={task.id}
+                    className={cn(
+                      "bg-white/10 backdrop-blur-md border px-5",
+                      task.completed
+                        ? "border-green-500/70"
+                        : "border-red-500/70"
+                    )}
+                  >
+                    <div className="flex gap-5">
+                      {/* Circle Checkbox */}
+                      <div>
+                        <button>
+                          <Circle className="w-6 h-6 text-purple-300 hover:text-purple-100 hover:scale-105 transition-all duration-300" />
+                        </button>
+                      </div>
+                      {/* Element Tast */}
+                      <div className="w-full">
+                        {/* head */}
+                        <div className="flex justify-between w-full">
+                          <div className="flex flex-col gap-1">
+                            <div className="flex gap-3 items-center">
+                              <h1 className="flex gap-1 text-muted text-lg">
+                                {task.title}
+                              </h1>
+                              <Badge className="bg-purple-500/20 text-purple-300 text-[10px] py-0 px-3">
+                                {task.category}
+                              </Badge>
+                            </div>
+                            {/* Detail */}
+                            <p className="text-[12px] text-muted-foreground">
+                              {task.description}
+                            </p>
+                          </div>
+                          {/* Badge Priority */}
+                          <div>
+                            <Badge
+                              className={cn(
+                                task.priority === "high"
+                                  ? "bg-red-500/20 text-red-300 border-red-500/50"
+                                  : task.priority === "medium"
+                                  ? "bg-yellow-500/20 text-yellow-300 border-yellow-500/50"
+                                  : "bg-green-500/20 text-green-300 border-green-500/50"
+                              )}
+                            >
+                              {task.priority === "high"
+                                ? "High Priority . 50 XP"
+                                : task.priority === "medium"
+                                ? "Medium Priority . 30 XP"
+                                : "Low Priority . 15 XP"}
+                            </Badge>
+                          </div>
                         </div>
-                        {/* Detail */}
-                        <p className="text-[12px] text-muted-foreground">
-                          Web Comic
-                        </p>
-                      </div>
-                      <div>
-                        <Badge className="bg-red-500/20 text-red-300 border-red-500/50">
-                          Low Priority . 15 XP
-                        </Badge>
-                      </div>
-                    </div>
-                    {/* Progress deadline */}
-                    <div className="mt-5">
-                      <div className="flex gap-1 items-center text-muted ">
-                        <Clock className="size-3" />
-                        <p className="text-[10px]">10d 4h remaining</p>
-                      </div>
-                      <div className="mt-3">
-                        <Progress value={55} />
-                      </div>
-                    </div>
-                    {/* Date Deadline */}
-                    <div className="mt-5 flex  justify-between items-center">
-                      {/* Due Date */}
-                      <div>
-                        <p className="text-xs text-muted-foreground">
-                          Due: 10/13/2025, 12:00:00 AM
-                        </p>
-                      </div>
-                      {/* Action (Edit and Delete) Button */}
-                      <div className="flex gap-5">
-                        <Button className="bg-green-500/20 text-green-300 border-green-500/70 w-6 h-6 hover:bg-green-500/50 transition-all duration-300 cursor-pointer">
-                          <Pencil className="size-3" />
-                        </Button>
-                        <Button className="bg-red-500/20 text-red-300 border-red-500/70 w-6 h-6 hover:bg-red-500/50 transition-all duration-300 cursor-pointer">
-                          <Trash2 className="size-3" />
-                        </Button>
+                        {/* Progress deadline */}
+                        <div className="mt-5">
+                          <div className="flex gap-1 items-center text-muted ">
+                            <Clock className="size-3" />
+                            <p className="text-[10px]">10d 4h remaining</p>
+                          </div>
+                          <div className="mt-3">
+                            <Progress value={55} />
+                          </div>
+                        </div>
+                        {/* Date Deadline */}
+                        <div className="mt-5 flex  justify-between items-center">
+                          {/* Due Date */}
+                          <div>
+                            <p className="text-xs text-muted-foreground">
+                              Due: {task.deadline.toLocaleString()}
+                            </p>
+                          </div>
+                          {/* Action (Edit and Delete) Button */}
+                          <div className="flex gap-5">
+                            <Button className="bg-green-500/20 text-green-300 border-green-500/70 w-6 h-6 hover:bg-green-500/50 transition-all duration-300 cursor-pointer">
+                              <Pencil className="size-3" />
+                            </Button>
+                            <Button className="bg-red-500/20 text-red-300 border-red-500/70 w-6 h-6 hover:bg-red-500/50 transition-all duration-300 cursor-pointer">
+                              <Trash2 className="size-3" />
+                            </Button>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </Card>
+                  </Card>
+                ))}
             </div>
           </div>
         </main>

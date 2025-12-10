@@ -35,6 +35,8 @@ import { format } from "date-fns";
 import { Label } from "../ui/label";
 import zod from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useDispatch } from "react-redux";
+import { addTasks } from "@/redux/slices/taskSlice";
 
 const formSchema = zod.object({
   questName: zod.string().min(1, { message: "Quest Name is required" }),
@@ -58,10 +60,10 @@ export function DialogNewQuest() {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [time, setTime] = useState<string>("12:00");
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const handleAddTask = (values: zod.infer<typeof formSchema>) => {
-    console.log(values);
-    alert("OK");
+    dispatch(addTasks(values));
     form.reset();
   };
 
