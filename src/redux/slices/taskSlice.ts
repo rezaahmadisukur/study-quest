@@ -29,9 +29,14 @@ const taskSlice = createSlice({
         createdAt: new Date().toISOString()
       };
       state.data.push(formData);
+    },
+    removeTask: (state, action) => {
+      state.data = state.data.filter(
+        (s: { id: string }) => s.id !== action.payload.id
+      );
     }
   }
 });
 
-export const { addTasks } = taskSlice.actions;
+export const { addTasks, removeTask } = taskSlice.actions;
 export default taskSlice.reducer;

@@ -23,14 +23,15 @@ import {
 import { Badge } from "./components/ui/badge";
 import { Progress } from "./components/ui/progress";
 import { Button } from "./components/ui/button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "./redux/store";
 import { useEffect } from "react";
 import { cn } from "./lib/utils";
-import type { addTaskType } from "./redux/slices/taskSlice";
+import { removeTask, type addTaskType } from "./redux/slices/taskSlice";
 
 const App = () => {
   const tasks = useSelector((state: RootState) => state.tasks.data);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     localStorage.setItem("studyTasks", JSON.stringify(tasks));
@@ -204,7 +205,7 @@ const App = () => {
 
           <div className="mt-10">
             <h1 className="text-2xl font-md text-muted">
-              ✅ Completed Quests (1)
+              ✅ Completed Quests ({tasks.length})
             </h1>
             <div className="grid grid-cols-1 gap-5 mt-10">
               {tasks.length > 0 &&
@@ -277,7 +278,7 @@ const App = () => {
                           {/* Due Date */}
                           <div>
                             <p className="text-xs text-muted-foreground">
-                              Due: {task.deadline.toLocaleString()}
+                              Due: {new Date(task.deadline).toLocaleString()}
                             </p>
                           </div>
                           {/* Action (Edit and Delete) Button */}
@@ -285,7 +286,12 @@ const App = () => {
                             <Button className="bg-green-500/20 text-green-300 border-green-500/70 w-6 h-6 hover:bg-green-500/50 transition-all duration-300 cursor-pointer">
                               <Pencil className="size-3" />
                             </Button>
-                            <Button className="bg-red-500/20 text-red-300 border-red-500/70 w-6 h-6 hover:bg-red-500/50 transition-all duration-300 cursor-pointer">
+                            <Button
+                              className="bg-red-500/20 text-red-300 border-red-500/70 w-6 h-6 hover:bg-red-500/50 transition-all duration-300 cursor-pointer"
+                              onClick={() =>
+                                dispatch(removeTask({ id: task.id }))
+                              }
+                            >
                               <Trash2 className="size-3" />
                             </Button>
                           </div>
