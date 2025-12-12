@@ -41,23 +41,21 @@ import { addTasks } from "@/redux/slices/taskSlice";
 const formSchema = zod.object({
   questName: zod.string().min(1, { message: "Quest Name is required" }),
   description: zod.string().min(1, { message: "Descripton is required" }),
-  category: zod.string().min(1, { message: "Category is required" }),
   priority: zod.string().min(1, { message: "Priority is required" }),
   deadline: zod.string().min(1, { message: "Deadline is required" })
 });
 
-export function DialogNewQuest() {
+export function AddTaskComp() {
   const form = useForm<zod.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       questName: "",
       description: "",
-      category: "",
       priority: "",
       deadline: ""
     }
   });
-  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [date, setDate] = useState<Date | undefined>();
   const [time, setTime] = useState<string>("12:00");
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
@@ -65,6 +63,8 @@ export function DialogNewQuest() {
   const handleAddTask = (values: zod.infer<typeof formSchema>) => {
     dispatch(addTasks(values));
     form.reset();
+    setDate(undefined);
+    setTime("12:00");
   };
 
   const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,6 +79,7 @@ export function DialogNewQuest() {
       setDate(newDate);
     }
   };
+
   return (
     <Dialog>
       <div className="mt-10 flex justify-center">
@@ -139,25 +140,7 @@ export function DialogNewQuest() {
                 )}
               />
               {/* Three Input  */}
-              <div className="grid grid-cols-3 gap-5">
-                <FormField
-                  control={form.control}
-                  name="category"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-xs">Category</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="text"
-                          placeholder="e.g. , web-programming"
-                          {...field}
-                          className="rounded-sm bg-white/10 backdrop-blur-md border border-white/20 placeholder:text-muted"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+              <div className="grid grid-cols-2 gap-5">
                 <FormField
                   control={form.control}
                   name="priority"
@@ -196,7 +179,7 @@ export function DialogNewQuest() {
                           <PopoverTrigger asChild>
                             <Button
                               className={cn(
-                                "w-[280px] justify-start text-left font-normal rounded-sm bg-white/10 backdrop-blur-md border border-white/20 placeholder:text-muted",
+                                "justify-start text-left font-normal rounded-sm bg-white/10 backdrop-blur-md border border-white/20 placeholder:text-muted",
                                 !date && "text-muted-foreground"
                               )}
                               variant="outline"
@@ -214,7 +197,10 @@ export function DialogNewQuest() {
                               <Calendar
                                 mode="single"
                                 onSelect={(selectedDate) => {
-                                  field.onChange(selectedDate?.toISOString());
+                                  const deadlineString = `${
+                                    selectedDate?.toISOString().split("T")[0]
+                                  }T${time}`;
+                                  field.onChange(deadlineString);
                                   setDate(selectedDate);
                                   setOpen(false);
                                 }}

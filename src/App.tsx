@@ -2,7 +2,6 @@ import { Flame, Funnel, Lock, Shell, Trophy } from "lucide-react";
 import ExperientLevel from "./components/Fragments/ExperientLevel";
 import Header from "./components/Fragments/Header";
 import { Card } from "./components/ui/card";
-import { DialogNewQuest } from "./components/Fragments/DialogNewQuest";
 import {
   Select,
   SelectContent,
@@ -14,6 +13,7 @@ import { useSelector } from "react-redux";
 import type { RootState } from "./redux/store";
 import { useEffect } from "react";
 import TasksQuest from "./components/Fragments/TasksQuest";
+import { AddTaskComp } from "./components/Fragments/addTaskComp";
 
 const App = () => {
   const tasks = useSelector((state: RootState) => state.tasks.data);
@@ -142,7 +142,7 @@ const App = () => {
           </Card>
           {/* CARD - Achievements */}
 
-          <DialogNewQuest />
+          <AddTaskComp />
 
           <Card className="bg-white/10 backdrop-blur-md border border-white/20 px-5 mt-10">
             <div className="flex gap-5 items-center">
@@ -153,38 +153,20 @@ const App = () => {
                   Filter :{" "}
                 </h1>
               </div>
-              {/* 2 */}
-              <div className="flex gap-2 items-center">
-                <h1 className="text-xs text-neutral-50">Category : </h1>
-                <Select>
-                  <SelectTrigger className="bg-white/10 backdrop-blur-md border border-white/20 w-[180px]">
-                    <SelectValue
-                      placeholder="All Categories"
-                      className="placeholder:text-neutral-50"
-                    />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="light">Light</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              {/* 3 */}
-              <div className="flex gap-2 items-center">
-                <h1 className="text-xs text-neutral-50">Priority : </h1>
-                <Select>
-                  <SelectTrigger className="bg-white/10 backdrop-blur-md border border-white/20 w-[180px]">
-                    <SelectValue
-                      placeholder="All Priorities"
-                      className="placeholder:text-neutral-50"
-                    />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="low">Low Priority</SelectItem>
-                    <SelectItem value="medium">Medium Priority</SelectItem>
-                    <SelectItem value="high">High Priority</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+              {/* Priority Select Options */}
+              <Select>
+                <SelectTrigger className="bg-white/10 backdrop-blur-md border border-white/20 w-[180px]">
+                  <SelectValue
+                    placeholder="All Priorities"
+                    className="placeholder:text-neutral-50"
+                  />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="low">Low Priority</SelectItem>
+                  <SelectItem value="medium">Medium Priority</SelectItem>
+                  <SelectItem value="high">High Priority</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </Card>
 

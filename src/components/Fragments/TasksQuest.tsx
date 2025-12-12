@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Card } from "../ui/card";
-import { Circle, CircleCheckBig, Pencil, Trash2 } from "lucide-react";
+import { Circle, CircleCheckBig, Trash2 } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { useDispatch } from "react-redux";
@@ -10,6 +10,7 @@ import {
   type addTaskType
 } from "@/redux/slices/taskSlice";
 import TaskProgress from "./TaskProgress";
+import { EditTaskComp } from "./EditTaskComp";
 
 const TasksQuest = ({ tasks }: { tasks: addTaskType[] }) => {
   const dispatch = useDispatch();
@@ -58,14 +59,7 @@ const TasksQuest = ({ tasks }: { tasks: addTaskType[] }) => {
                       {/* head */}
                       <div className="flex justify-between w-full">
                         <div className="flex flex-col gap-1">
-                          <div className="flex gap-3 items-center">
-                            <h1 className="flex gap-1 text-muted text-lg">
-                              {task.title}
-                            </h1>
-                            <Badge className="bg-purple-500/20 text-purple-300 text-[10px] py-0 px-3">
-                              {task.category}
-                            </Badge>
-                          </div>
+                          <h1 className="text-muted text-lg">{task.title}</h1>
                           {/* Detail */}
                           <p className="text-[12px] text-muted-foreground">
                             {task.description}
@@ -98,19 +92,27 @@ const TasksQuest = ({ tasks }: { tasks: addTaskType[] }) => {
                         />
                       )}
                       {/* Date Deadline */}
-                      <div className="mt-5 flex  justify-between items-center">
+                      <div className="mt-5 flex justify-between items-center">
                         {/* Due Date */}
                         <div>
                           <p className="text-xs text-muted-foreground">
-                            Due: {new Date(task.deadline).toLocaleString()}
+                            Due:{" "}
+                            {new Date(task.deadline).toLocaleString("en-EN", {
+                              year: "numeric",
+                              month: "2-digit",
+                              day: "2-digit",
+                              hour: "2-digit",
+                              minute: "2-digit",
+                              hour12: true
+                            })}
                           </p>
                         </div>
                         {/* Action (Edit and Delete) Button */}
                         <div className="flex gap-5">
                           {!task.completed && (
-                            <Button className="bg-green-500/20 text-green-300 border-green-500/70 w-6 h-6 hover:bg-green-500/50 transition-all duration-300 cursor-pointer">
-                              <Pencil className="size-3" />
-                            </Button>
+                            <span>
+                              <EditTaskComp taskId={task.id} />
+                            </span>
                           )}
                           <Button
                             className="bg-red-500/20 text-red-300 border-red-500/70 w-6 h-6 hover:bg-red-500/50 transition-all duration-300 cursor-pointer"
