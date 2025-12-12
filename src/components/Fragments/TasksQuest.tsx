@@ -11,6 +11,7 @@ import {
 } from "@/redux/slices/taskSlice";
 import TaskProgress from "./TaskProgress";
 import { EditTaskComp } from "./EditTaskComp";
+import { addStat } from "@/redux/slices/statSlice";
 
 const TasksQuest = ({ tasks }: { tasks: addTaskType[] }) => {
   const dispatch = useDispatch();
@@ -37,14 +38,15 @@ const TasksQuest = ({ tasks }: { tasks: addTaskType[] }) => {
                     <div>
                       <button
                         className="cursor-pointer"
-                        onClick={() =>
+                        onClick={() => {
                           dispatch(
                             checkedTask({
                               id: task.id,
                               completed: task.completed
                             })
-                          )
-                        }
+                          );
+                          dispatch(addStat({ priority: task.priority }));
+                        }}
                         disabled={task.completed}
                       >
                         {task.completed ? (

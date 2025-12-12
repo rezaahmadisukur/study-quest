@@ -13,16 +13,20 @@ import { useSelector } from "react-redux";
 import type { RootState } from "./redux/store";
 import { useEffect } from "react";
 import TasksQuest from "./components/Fragments/TasksQuest";
-import { AddTaskComp } from "./components/Fragments/addTaskComp";
+import { AddTaskComp } from "./components/Fragments/AddTaskComp";
 
 const App = () => {
   const tasks = useSelector((state: RootState) => state.tasks.data);
+  const stats = useSelector((state: RootState) => state.stats.data);
 
   useEffect(() => {
     localStorage.setItem("studyTasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  // console.log(tasks.sort());
+  useEffect(() => {
+    localStorage.setItem("studyStats", JSON.stringify(stats));
+  }, [stats]);
+
   return (
     <div className="min-h-screen bg-linear-to-br from-indigo-900 via-purple-900 to-pink-900">
       <div className="max-w-5xl mx-auto py-20">
@@ -31,7 +35,7 @@ const App = () => {
         </header>
 
         <main className="my-20">
-          <ExperientLevel />
+          <ExperientLevel level={stats.level} totalXP={stats.totalXP} />
 
           {/* CARD - Total XP, Completed, Streak */}
           <div className="grid grid-cols-3 my-5 gap-2">
@@ -42,7 +46,7 @@ const App = () => {
                 </div>
                 <div className="text-primary-foreground">
                   <p className="text-xs">Total XP</p>
-                  <h1 className="font-semibold text-lg">0</h1>
+                  <h1 className="font-semibold text-lg">{stats.totalXP}</h1>
                 </div>
               </div>
             </Card>
@@ -53,7 +57,9 @@ const App = () => {
                 </div>
                 <div className="text-primary-foreground">
                   <p className="text-xs">Completed</p>
-                  <h1 className="font-semibold text-lg">0</h1>
+                  <h1 className="font-semibold text-lg">
+                    {stats.taskCompleted}
+                  </h1>
                 </div>
               </div>
             </Card>

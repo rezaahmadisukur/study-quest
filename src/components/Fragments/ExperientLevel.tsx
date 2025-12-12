@@ -2,7 +2,15 @@ import { Star } from "lucide-react";
 import { Card } from "../ui/card";
 import { Progress } from "../ui/progress";
 
-const ExperientLevel = () => {
+interface PropsType {
+  level?: number;
+  totalXP: number;
+}
+
+const ExperientLevel = ({ level, totalXP }: PropsType) => {
+  const xpToNextLevel = 100;
+  const currentXpLevel = (totalXP || 0) % xpToNextLevel;
+  const progressPercent = (currentXpLevel / xpToNextLevel) * 100;
   return (
     <Card className="bg-white/10 backdrop-blur-md border border-white/20">
       {/* Start Level */}
@@ -13,18 +21,23 @@ const ExperientLevel = () => {
               <Star className="size-7 text-primary-foreground stroke-2" />
             </div>
             <div className="text-primary-foreground">
-              <h1 className="font-semibold text-lg">Level 1</h1>
+              <h1 className="font-semibold text-lg">Level {level || 1}</h1>
               <p className="text-xs">Scholar Warrior</p>
             </div>
           </div>
           <div className="text-primary-foreground flex justify-end flex-col items-end">
             <h1 className="bg-linear-to-br from-yellow-400 to-orange-500 w-fit bg-clip-text text-transparent text-lg font-semibold">
-              0 / 100 XP
+              {currentXpLevel} / {xpToNextLevel} XP
             </h1>
-            <p className="text-xs">100 XP to next level</p>
+            <p className="text-xs">
+              {xpToNextLevel - currentXpLevel} XP to next level
+            </p>
           </div>
         </div>
-        <Progress className="bg-gray-700 h-4 rounded-full" value={30} />
+        <Progress
+          className="bg-gray-700 h-4 rounded-full"
+          value={progressPercent}
+        />
       </div>
     </Card>
   );

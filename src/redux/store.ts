@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import taskSlice from "./slices/taskSlice";
+import { taskReducer } from "./slices/taskSlice";
+import { statReducer } from "./slices/statSlice";
 
 export const store = configureStore({
   reducer: {
-    tasks: taskSlice
+    tasks: taskReducer,
+    stats: statReducer
   }
 });
 
