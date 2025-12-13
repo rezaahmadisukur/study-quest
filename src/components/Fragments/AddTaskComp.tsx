@@ -58,13 +58,16 @@ export function AddTaskComp() {
   const [date, setDate] = useState<Date | undefined>();
   const [time, setTime] = useState<string>("12:00");
   const [open, setOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const dispatch = useDispatch();
 
   const handleAddTask = (values: zod.infer<typeof formSchema>) => {
+    console.log(values.deadline);
     dispatch(addTasks(values));
     form.reset();
     setDate(undefined);
     setTime("12:00");
+    setIsDialogOpen(false);
   };
 
   const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,7 +84,7 @@ export function AddTaskComp() {
   };
 
   return (
-    <Dialog>
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <div className="mt-10 flex justify-center">
         <DialogTrigger asChild>
           <Button className="bg-linear-to-br from-yellow-400 to-orange-500 cursor-pointer hover:scale-103 transition-all duration-300 text-lg font-light">
@@ -89,10 +92,7 @@ export function AddTaskComp() {
           </Button>
         </DialogTrigger>
       </div>
-      <DialogContent
-        className="sm:max-w-4xl bg-white/10 backdrop-blur-md border border-white/20 text-muted overflow-auto"
-        aria-description=""
-      >
+      <DialogContent className="sm:max-w-4xl bg-white/10 backdrop-blur-md border border-white/20 text-muted overflow-auto">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleAddTask)}>
             <DialogHeader>
@@ -197,18 +197,10 @@ export function AddTaskComp() {
                               <Calendar
                                 mode="single"
                                 onSelect={(selectedDate) => {
-                                  const deadlineString = `${
-                                    selectedDate?.toISOString().split("T")[0]
-                                  }T${time}`;
-                                  field.onChange(deadlineString);
+                                  if (!selectedDate) return;
                                   setDate(selectedDate);
-                                  setOpen(false);
                                 }}
-                                selected={
-                                  field.value
-                                    ? new Date(field.value)
-                                    : undefined
-                                }
+                                selected={date}
                               />
                               <div className="space-y-2 p-4">
                                 <Label htmlFor="time">Time</Label>
@@ -219,6 +211,21 @@ export function AddTaskComp() {
                                   type="time"
                                   value={time}
                                 />
+                                <Button
+                                  className="w-full"
+                                  onClick={() => {
+                                    if (date) {
+                                      const deadlineString = `${format(
+                                        date,
+                                        "yyyy-MM-dd"
+                                      )}T${time}`;
+                                      field.onChange(deadlineString);
+                                      setOpen(false);
+                                    }
+                                  }}
+                                >
+                                  Done
+                                </Button>
                               </div>
                             </div>
                           </PopoverContent>

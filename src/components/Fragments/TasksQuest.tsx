@@ -39,8 +39,6 @@ const TasksQuest = ({
     }
   });
 
-  console.log(filterData);
-
   return (
     <div>
       {filterData.length > 0 ? (

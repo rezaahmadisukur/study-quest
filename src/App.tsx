@@ -47,7 +47,9 @@ const App = () => {
                 </div>
                 <div className="text-primary-foreground">
                   <p className="text-xs">Total XP</p>
-                  <h1 className="font-semibold text-lg">{stats.totalXP}</h1>
+                  <h1 className="font-semibold text-lg">
+                    {stats.totalXP || 0}
+                  </h1>
                 </div>
               </div>
             </Card>
@@ -59,7 +61,7 @@ const App = () => {
                 <div className="text-primary-foreground">
                   <p className="text-xs">Completed</p>
                   <h1 className="font-semibold text-lg">
-                    {stats.taskCompleted}
+                    {stats.taskCompleted || 0}
                   </h1>
                 </div>
               </div>
