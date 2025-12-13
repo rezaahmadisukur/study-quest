@@ -21,19 +21,36 @@ const TasksQuest = ({
   selectOpt: string;
 }) => {
   const dispatch = useDispatch();
+  const sortedArray = [...tasks].sort((a, b) =>
+    a.deadline.localeCompare(b.deadline)
+  );
 
-  console.log(selectOpt);
+  const filterData = sortedArray.filter((task) => {
+    const data = task.priority === selectOpt;
+    switch (selectOpt) {
+      case "high":
+        return data;
+      case "medium":
+        return data;
+      case "low":
+        return data;
+      default:
+        return sortedArray;
+    }
+  });
+
+  console.log(filterData);
 
   return (
     <div>
-      {tasks.length > 0 ? (
+      {filterData.length > 0 ? (
         <div className="mt-10">
           <h1 className="text-2xl font-md text-muted">
-            ✅ Completed Quests ({tasks.length})
+            ✅ Completed Quests ({filterData.length})
           </h1>
           <div className="grid grid-cols-1 gap-5 mt-10">
-            {tasks.length > 0 &&
-              tasks.map((task: addTaskType) => (
+            {filterData.length > 0 &&
+              filterData.map((task: addTaskType) => (
                 <Card
                   key={task.id}
                   className={cn(

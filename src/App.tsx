@@ -169,6 +169,7 @@ const App = () => {
                   />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="all">All Priorities</SelectItem>
                   <SelectItem value="low">Low Priority</SelectItem>
                   <SelectItem value="medium">Medium Priority</SelectItem>
                   <SelectItem value="high">High Priority</SelectItem>
