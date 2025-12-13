@@ -13,8 +13,16 @@ import TaskProgress from "./TaskProgress";
 import { EditTaskComp } from "./EditTaskComp";
 import { addStat } from "@/redux/slices/statSlice";
 
-const TasksQuest = ({ tasks }: { tasks: addTaskType[] }) => {
+const TasksQuest = ({
+  tasks,
+  selectOpt
+}: {
+  tasks: addTaskType[];
+  selectOpt: string;
+}) => {
   const dispatch = useDispatch();
+
+  console.log(selectOpt);
 
   return (
     <div>

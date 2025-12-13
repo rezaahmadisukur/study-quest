@@ -11,13 +11,14 @@ import {
 } from "./components/ui/select";
 import { useSelector } from "react-redux";
 import type { RootState } from "./redux/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import TasksQuest from "./components/Fragments/TasksQuest";
 import { AddTaskComp } from "./components/Fragments/AddTaskComp";
 
 const App = () => {
   const tasks = useSelector((state: RootState) => state.tasks.data);
   const stats = useSelector((state: RootState) => state.stats.data);
+  const [selectOpt, setSelectOpt] = useState<string>("");
 
   useEffect(() => {
     localStorage.setItem("studyTasks", JSON.stringify(tasks));
@@ -160,7 +161,7 @@ const App = () => {
                 </h1>
               </div>
               {/* Priority Select Options */}
-              <Select>
+              <Select value={selectOpt} onValueChange={setSelectOpt}>
                 <SelectTrigger className="bg-white/10 backdrop-blur-md border border-white/20 w-[180px]">
                   <SelectValue
                     placeholder="All Priorities"
@@ -176,7 +177,7 @@ const App = () => {
             </div>
           </Card>
 
-          <TasksQuest tasks={tasks} />
+          <TasksQuest tasks={tasks} selectOpt={selectOpt} />
         </main>
       </div>
     </div>
