@@ -62,7 +62,6 @@ export function AddTaskComp() {
   const dispatch = useDispatch();
 
   const handleAddTask = (values: zod.infer<typeof formSchema>) => {
-    console.log(values.deadline);
     dispatch(addTasks(values));
     form.reset();
     setDate(undefined);

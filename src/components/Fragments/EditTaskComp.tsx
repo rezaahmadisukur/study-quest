@@ -60,12 +60,15 @@ export function EditTaskComp({ taskId }: { taskId: string }) {
     }
   });
   const [date, setDate] = useState<Date | undefined>(new Date(task.deadline));
-  const [time, setTime] = useState<string>("12:00");
+  const [time, setTime] = useState<string>(task.deadline.split("T")[1]);
   const [open, setOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const dispatch = useDispatch();
 
   const handleAddTask = (values: zod.infer<typeof formSchema>) => {
+    // console.log(values.deadline);
     dispatch(updateTask({ id: task.id, values: values }));
+    setIsDialogOpen(false);
   };
 
   const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,7 +85,7 @@ export function EditTaskComp({ taskId }: { taskId: string }) {
   };
 
   return (
-    <Dialog>
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <div className="flex justify-center">
         <DialogTrigger asChild>
           <Button
@@ -201,18 +204,10 @@ export function EditTaskComp({ taskId }: { taskId: string }) {
                               <Calendar
                                 mode="single"
                                 onSelect={(selectedDate) => {
-                                  const deadlineString = `${
-                                    selectedDate?.toISOString().split("T")[0]
-                                  }T${time}`;
-                                  field.onChange(deadlineString);
+                                  if (!selectedDate) return;
                                   setDate(selectedDate);
-                                  setOpen(false);
                                 }}
-                                selected={
-                                  field.value
-                                    ? new Date(field.value)
-                                    : undefined
-                                }
+                                selected={date}
                               />
                               <div className="space-y-2 p-4">
                                 <Label htmlFor="time">Time</Label>
@@ -223,6 +218,21 @@ export function EditTaskComp({ taskId }: { taskId: string }) {
                                   type="time"
                                   value={time}
                                 />
+                                <Button
+                                  onClick={() => {
+                                    if (date) {
+                                      const deadlineString = `${format(
+                                        date,
+                                        "yyyy-MM-dd"
+                                      )}T${time}`;
+                                      field.onChange(deadlineString);
+                                      setOpen(false);
+                                    }
+                                  }}
+                                  className="w-full"
+                                >
+                                  Done
+                                </Button>
                               </div>
                             </div>
                           </PopoverContent>
