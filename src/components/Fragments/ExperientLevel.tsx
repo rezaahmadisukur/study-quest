@@ -17,7 +17,7 @@ const ExperientLevel = ({ level, totalXP }: PropsType) => {
       <div className="px-5 flex flex-col gap-5">
         <div className="flex justify-between">
           <div className="flex gap-2 items-center">
-            <div className="w-12 h-12 bg-linear-to-br from-yellow-400 to-orange-500 grid place-content-center rounded-full shadow-2xl shadow-neutral-950 inset-shadow-2xs inset-shadow-neutral-950">
+            <div className="w-12 h-12 bg-linear-to-br from-yellow-400 to-orange-500 grid place-content-center rounded-full shadow-2xl shadow-neutral-950 inset-shadow inset-shadow-neutral-950">
               <Star className="size-7 text-primary-foreground stroke-2" />
             </div>
             <div className="text-primary-foreground">

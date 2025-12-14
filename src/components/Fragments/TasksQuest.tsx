@@ -12,12 +12,16 @@ import {
 import TaskProgress from "./TaskProgress";
 import { EditTaskComp } from "./EditTaskComp";
 import { addStat } from "@/redux/slices/statSlice";
+import { addAchievement } from "@/redux/slices/achievementSlice";
+import type { StatsType } from "@/types/types";
 
 const TasksQuest = ({
   tasks,
+  stats,
   selectOpt
 }: {
   tasks: addTaskType[];
+  stats: StatsType;
   selectOpt: string;
 }) => {
   const dispatch = useDispatch();
@@ -69,6 +73,12 @@ const TasksQuest = ({
                             })
                           );
                           dispatch(addStat({ priority: task.priority }));
+                          dispatch(
+                            addAchievement({
+                              tasks: tasks,
+                              stats: stats
+                            })
+                          );
                         }}
                         disabled={task.completed}
                       >

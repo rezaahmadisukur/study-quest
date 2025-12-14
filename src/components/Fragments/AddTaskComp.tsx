@@ -157,7 +157,7 @@ export function AddTaskComp() {
                           <SelectContent>
                             <SelectItem value="low">Low - 15 XP</SelectItem>
                             <SelectItem value="medium">
-                              Mediium - 30 XP
+                              Medium - 30 XP
                             </SelectItem>
                             <SelectItem value="high">High - 50 XP</SelectItem>
                           </SelectContent>
