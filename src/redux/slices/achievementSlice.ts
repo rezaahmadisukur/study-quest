@@ -14,35 +14,35 @@ const storage = [
   {
     id: "2",
     title: "Streak Master",
-    description: "Reach a 5-task streak",
+    description: "Reach a 10-task streak",
     icon: "🔥",
     unlocked: false
   },
   {
     id: "3",
     title: "High Achiever",
-    description: "Complete 10 tasks",
+    description: "Complete 100 tasks",
     icon: "⭐",
     unlocked: false
   },
   {
     id: "4",
     title: "Level 5 Scholar",
-    description: "Reach level 5",
+    description: "Reach level 50",
     icon: "📚",
     unlocked: false
   },
   {
     id: "5",
     title: "Priority Pro",
-    description: "Complete 5 high-priority tasks",
+    description: "Complete 30 high-priority",
     icon: "💎",
     unlocked: false
   },
   {
     id: "6",
     title: "XP Hunter",
-    description: "Earn 500 total XP",
+    description: "Earn 1000 total XP",
     icon: "👑",
     unlocked: false
   }

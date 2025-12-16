@@ -8,6 +8,8 @@ import TaskProgress from "./TaskProgress";
 import { EditTaskComp } from "./EditTaskComp";
 import { completeTask } from "@/redux/slices/achievementSlice";
 import { useAppDispatch } from "@/redux/store";
+import { useContext } from "react";
+import { Context } from "@/contexts/Context";
 
 const TasksQuest = ({
   tasks,
@@ -20,6 +22,7 @@ const TasksQuest = ({
   const sortedArray = [...tasks].sort((a, b) =>
     a.deadline.localeCompare(b.deadline)
   );
+  const { setIsCompleteTask, setPlusExp } = useContext(Context);
 
   const filterData = sortedArray.filter((task) => {
     const data = task.priority === selectOpt;
@@ -34,6 +37,21 @@ const TasksQuest = ({
         return sortedArray;
     }
   });
+
+  const handleCompleteTask = (task: addTaskType) => {
+    dispatch(completeTask(task));
+    if (task.priority === "high") {
+      setPlusExp(50);
+    } else if (task.priority === "medium") {
+      setPlusExp(30);
+    } else {
+      setPlusExp(15);
+    }
+    setIsCompleteTask((prev: boolean): boolean => !prev);
+    setTimeout(() => {
+      setIsCompleteTask((prev: boolean): boolean => !prev);
+    }, 2000);
+  };
 
   return (
     <div className="relative">
@@ -57,9 +75,7 @@ const TasksQuest = ({
                     <div>
                       <button
                         className="cursor-pointer"
-                        onClick={() => {
-                          dispatch(completeTask(task));
-                        }}
+                        onClick={() => handleCompleteTask(task)}
                         disabled={task.completed}
                       >
                         {task.completed ? (
