@@ -3,28 +3,20 @@ import { Card } from "../ui/card";
 import { Circle, CircleCheckBig, Trash2 } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
-import { useDispatch } from "react-redux";
-import {
-  checkedTask,
-  removeTask,
-  type addTaskType
-} from "@/redux/slices/taskSlice";
+import { removeTask, type addTaskType } from "@/redux/slices/taskSlice";
 import TaskProgress from "./TaskProgress";
 import { EditTaskComp } from "./EditTaskComp";
-import { addStat } from "@/redux/slices/statSlice";
-import { addAchievement } from "@/redux/slices/achievementSlice";
-import type { StatsType } from "@/types/types";
+import { completeTask } from "@/redux/slices/achievementSlice";
+import { useAppDispatch } from "@/redux/store";
 
 const TasksQuest = ({
   tasks,
-  stats,
   selectOpt
 }: {
   tasks: addTaskType[];
-  stats: StatsType;
   selectOpt: string;
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const sortedArray = [...tasks].sort((a, b) =>
     a.deadline.localeCompare(b.deadline)
   );
@@ -44,7 +36,7 @@ const TasksQuest = ({
   });
 
   return (
-    <div>
+    <div className="relative">
       {filterData.length > 0 ? (
         <div className="mt-10">
           <h1 className="text-2xl font-md text-muted">
@@ -66,19 +58,7 @@ const TasksQuest = ({
                       <button
                         className="cursor-pointer"
                         onClick={() => {
-                          dispatch(
-                            checkedTask({
-                              id: task.id,
-                              completed: task.completed
-                            })
-                          );
-                          dispatch(addStat({ priority: task.priority }));
-                          dispatch(
-                            addAchievement({
-                              tasks: tasks,
-                              stats: stats
-                            })
-                          );
+                          dispatch(completeTask(task));
                         }}
                         disabled={task.completed}
                       >

@@ -9,12 +9,14 @@ import {
   SelectTrigger,
   SelectValue
 } from "./components/ui/select";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "./redux/store";
 import { useEffect, useState } from "react";
 import TasksQuest from "./components/Fragments/TasksQuest";
 import { AddTaskComp } from "./components/Fragments/AddTaskComp";
 import AchievementsComp from "./components/Fragments/AchievementsComp";
+import { format } from "date-fns";
+import { updateStreak } from "./redux/slices/statSlice";
 
 const App = () => {
   const tasks = useSelector((state: RootState) => state.tasks.data);
@@ -23,6 +25,7 @@ const App = () => {
     (state: RootState) => state.achievements.data
   );
   const [selectOpt, setSelectOpt] = useState<string>("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     localStorage.setItem("studyTasks", JSON.stringify(tasks));
@@ -35,6 +38,21 @@ const App = () => {
   useEffect(() => {
     localStorage.setItem("studyAchievements", JSON.stringify(achievements));
   }, [achievements]);
+
+  useEffect(() => {
+    const today = format(new Date().toISOString(), "yyyy-MM-dd");
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayStr = format(yesterday.toISOString(), "yyyy-MM-dd");
+
+    if (
+      stats.lastCompletedDate &&
+      stats.lastCompletedDate !== today &&
+      stats.lastCompletedDate !== yesterdayStr
+    ) {
+      dispatch(updateStreak({ streak: 0 }));
+    }
+  }, [dispatch, stats.lastCompletedDate]);
 
   return (
     <div className="min-h-screen bg-linear-to-br from-indigo-900 via-purple-900 to-pink-900">
@@ -81,7 +99,7 @@ const App = () => {
                 </div>
                 <div className="text-primary-foreground">
                   <p className="text-xs">Streak</p>
-                  <h1 className="font-semibold text-lg">0</h1>
+                  <h1 className="font-semibold text-lg">{stats.streak || 0}</h1>
                 </div>
               </div>
             </Card>
@@ -121,7 +139,7 @@ const App = () => {
             </div>
           </Card>
 
-          <TasksQuest tasks={tasks} selectOpt={selectOpt} stats={stats} />
+          <TasksQuest tasks={tasks} selectOpt={selectOpt} />
         </main>
       </div>
     </div>

@@ -1,4 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import type { AppDispatch, RootState } from "../store";
+import { checkedTask } from "./taskSlice";
+import { addStat } from "./statSlice";
 
 const storage = [
   {
@@ -58,19 +61,26 @@ const achievementSlice = createSlice({
   },
   reducers: {
     addAchievement: (state, action) => {
-      const highPriority =
-        action.payload.tasks.filter(
-          (ph: { priority: string; completed: boolean }) =>
-            ph.priority === "high" && ph.completed !== false
-        ).length + 1;
-      const taskCompleted = action.payload.stats.taskCompleted + 1;
+      const highPriority = action.payload.tasks.filter(
+        (ph: { priority: string; completed: boolean }) =>
+          ph.priority === "high" && ph.completed !== false
+      ).length;
+      const taskCompleted = action.payload.stats.taskCompleted;
+      const streak = action.payload.stats.streak;
+      const level = action.payload.stats.level;
+      const totalXP = action.payload.stats.totalXP;
       if (taskCompleted === 1) {
         state.data[0].unlocked = true;
-      } else if (taskCompleted === 10) {
+      } else if (streak === 10) {
+        state.data[1].unlocked = true;
+      } else if (taskCompleted === 100) {
         state.data[2].unlocked = true;
-      } else if (highPriority === 3) {
-        alert(highPriority);
+      } else if (level === 50) {
+        state.data[3].unlocked = true;
+      } else if (highPriority === 30) {
         state.data[4].unlocked = true;
+      } else if (totalXP === 1000) {
+        state.data[5].unlocked = true;
       }
     }
   }
@@ -78,3 +88,28 @@ const achievementSlice = createSlice({
 
 export const { addAchievement } = achievementSlice.actions;
 export const achievementReducer = achievementSlice.reducer;
+
+interface ITask {
+  id: string;
+  completed: boolean;
+  priority: string;
+}
+// Add This Thunk
+// ADD THIS THUNK
+export const completeTask =
+  (task: ITask) => (dispatch: AppDispatch, getState: () => RootState) => {
+    // 1. Mark task as completed
+    dispatch(checkedTask({ id: task.id, completed: task.completed }));
+
+    // 2. Update stats
+    dispatch(addStat({ priority: task.priority }));
+
+    // 3. Get FRESH state and check achievements
+    const state = getState();
+    dispatch(
+      addAchievement({
+        tasks: state.tasks.data,
+        stats: state.stats.data
+      })
+    );
+  };
