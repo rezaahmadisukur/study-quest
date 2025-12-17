@@ -1,6 +1,6 @@
 <div align="center">
   
-  <img src="/img/logo.png" alt="Logo Project" width="100" height="100">
+  <img src="/public/img/logo.png" alt="Logo Project" width="100" height="100">
 
   <h1>🎮 Study Quest</h1>
   
@@ -23,13 +23,22 @@
   <img src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript"/>
   <img src="https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white" alt="Vite"/>
   <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind"/>
+  <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
+  <img src="https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white" alt="Redux" />
+  <img src="https://img.shields.io/badge/shadcn%2Fui-000000?style=for-the-badge&logo=shadcnui&logoColor=white" alt="ShadcnUI" />
 
   <br />
   <br />
 
-<a href="https://study-quest-management.vercel.app/">🔴 View Live Demo</a>
+<p>
+  <span>🔴 Live Demo</span>
+  <a href="https://study-quest-management.vercel.app/"> here</a>
+</p>
 <span> • </span>
-<a href="https://github.com/rezaahmadisukur/study-quest/issues">🐛 Report Bug</a>
+<p>
+  <span>🐛 Report Bug</span>
+  <a href="https://github.com/rezaahmadisukur/study-quest/issues"> here</a>
+</p>
 
 </div>
 
@@ -37,10 +46,7 @@
 
 ## 📸 Screenshot Aplikasi
 
-![App Screenshot](/img/ss.png)
-_(Ganti link gambar di atas dengan screenshot asli aplikasimu)_
-
----
+![App Screenshot](/public/img/ss.png)
 
 ## 🧐 Tentang Project
 
