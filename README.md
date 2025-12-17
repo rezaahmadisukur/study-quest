@@ -27,16 +27,20 @@
 
   <br />
   <br />
+  <br />
+  <br />
+  <br />
 
-<p>
-  <span>🔴 Live Demo</span>
-  <a href="https://study-quest-management.vercel.app/"> here</a>
-</p>
-<span> • </span>
-<p>
-  <span>🐛 Report Bug</span>
-  <a href="https://github.com/rezaahmadisukur/study-quest/issues"> here</a>
-</p>
+  <a href="https://study-quest-management.vercel.app/" target="_blank">
+    <button>
+      🔴 Live Demo
+    </button>
+  </a>
+  <a href="https://github.com/rezaahmadisukur/study-quest/issues">
+    <button>
+        🐛 Report Bug
+    </button>
+  </a>
 
 </div>
 
