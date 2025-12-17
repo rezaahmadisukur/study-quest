@@ -1,6 +1,6 @@
 <div align="center">
   
-  <img src="/public/img/logo.png" alt="Logo Project" width="100" height="100">
+  <img src="/public/img/logo.png" alt="Logo Project">
 
   <h1>🎮 Study Quest</h1>
   
