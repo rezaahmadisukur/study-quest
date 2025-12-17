@@ -1,8 +1,6 @@
 <div align="center">
   
   <img src="/public/img/logo.png" alt="Logo Project">
-
-  <h1>🎮 Study Quest</h1>
   
   <p>
     Aplikasi web task manajemen dengan konsep game, yang mempunyai <i>Experience</i>, <i>Level</i> bahkan <i>Achievement</i> mengunakan teknologi <b>React + TypeScript</b> dengan penyimpanan <b>LocalStorage</b>.
