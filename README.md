@@ -1,73 +1,70 @@
-# React + TypeScript + Vite
+<div align="center">
+  
+  <img src="/img/logo.png" alt="Logo Project" width="100" height="100">
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+  <h1>🎮 Study Quest</h1>
+  
+  <p>
+    Aplikasi web task manajemen dengan konsep game, yang mempunyai <i>Experience</i>, <i>Level</i> bahkan <i>Achievement</i> mengunakan teknologi <b>React + TypeScript</b> dengan penyimpanan <b>LocalStorage</b>.
+  </p>
 
-Currently, two official plugins are available:
+  <a href="https://github.com/rezaahmadisukur/study-quest/stargazers">
+    <img src="https://img.shields.io/github/stars/rezaahmadisukur/study-quest?style=for-the-badge&logo=github&color=yellow" alt="Stars"/>
+  </a>
+  <a href="https://github.com/rezaahmadisukur/study-quest/network/members">
+    <img src="https://img.shields.io/github/forks/rezaahmadisukur/study-quest?style=for-the-badge&logo=github&color=orange" alt="Forks"/>
+  </a>
+  <a href="https://github.com/rezaahmadisukur/study-quest/issues">
+    <img src="https://img.shields.io/github/issues/rezaahmadisukur/study-quest?style=for-the-badge&logo=github&color=red" alt="Issues"/>
+  </a>
+  <br />
+  
+  <img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" alt="React"/>
+  <img src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript"/>
+  <img src="https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white" alt="Vite"/>
+  <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind"/>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+  <br />
+  <br />
 
-## React Compiler
+<a href="https://study-quest-management.vercel.app/">🔴 View Live Demo</a>
+<span> • </span>
+<a href="https://github.com/rezaahmadisukur/study-quest/issues">🐛 Report Bug</a>
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+</div>
 
-## Expanding the ESLint configuration
+<br />
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 📸 Screenshot Aplikasi
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+![App Screenshot](/img/ss.png)
+_(Ganti link gambar di atas dengan screenshot asli aplikasimu)_
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🧐 Tentang Project
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Jelaskan project ini secara singkat di sini. Contoh:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+> "Project ini dibuat untuk proses belajar saya menggunakan **React + Typescript**. Aplikasi ini membantu pengguna mencatat [DATA] tanpa perlu koneksi internet karena menggunakan **LocalStorage**."
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### ✨ Fitur Utama
+
+- ✅ **CRUD Operation:** Create, Read, Update, dan Delete data dengan mudah.
+- 💾 **Persistensi Data:** Data tersimpan aman di browser pengguna (LocalStorage).
+- ⚡ **Cepat & Ringan:** Dibangun dengan Vite dan React.
+- 🎮 **Konsep Game** Mempunyai Experience, Level dan Achievements
+<!-- - 📱 **Responsive UI:** Tampilan menyesuaikan layar HP dan Desktop. -->
+
+---
+
+## 🛠️ Tech Stack
+
+Project ini dibangun menggunakan teknologi modern:
+
+- **Framework:** [React](https://reactjs.org/) (v18+)
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **Build Tool:** [Vite](https://vitejs.dev/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Component Styling** [Shadcn](https://ui.shadcn.com/)
+- **State Management:** React Hooks (useState, useEffect) & [Redux](https://redux-toolkit.js.org/)
