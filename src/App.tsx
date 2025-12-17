@@ -1,4 +1,4 @@
-import { Flame, Funnel, Shell, Sparkles, Trophy } from "lucide-react";
+import { Flame, Funnel, Shell, Trophy } from "lucide-react";
 import ExperientLevel from "./components/Fragments/ExperientLevel";
 import Header from "./components/Fragments/Header";
 import { Card } from "./components/ui/card";
@@ -18,6 +18,7 @@ import AchievementsComp from "./components/Fragments/AchievementsComp";
 import { format } from "date-fns";
 import { updateStreak } from "./redux/slices/statSlice";
 import { Context } from "./contexts/Context";
+import CelebrationEffect from "./components/Fragments/CelebrionEffect";
 
 const App = () => {
   const tasks = useSelector((state: RootState) => state.tasks.data);
@@ -26,7 +27,7 @@ const App = () => {
     (state: RootState) => state.achievements.data
   );
   const [selectOpt, setSelectOpt] = useState<string>("");
-  const { isCompleteTask, plusExp } = useContext(Context);
+  const { celebrationMessage, plusExp } = useContext(Context);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -59,17 +60,7 @@ const App = () => {
   return (
     <div className="min-h-screen bg-linear-to-br from-indigo-900 via-purple-900 to-pink-900 relative">
       {/* Alert Completed Task */}
-      {isCompleteTask && (
-        <div className="bg-linear-to-br from-orange-400 to-red-500 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10  rounded-2xl shadow-2xl shadow-amber-300">
-          <div className="py-10 px-15 flex gap-5 items-center">
-            <Sparkles className="text-neutral-50 size-6 animate-spin" />
-            <h3 className="text-xl text-neutral-50 animate-pulse">
-              + {plusExp} Completed Task
-            </h3>
-            <Sparkles className="text-neutral-50 size-8 animate-spin" />
-          </div>
-        </div>
-      )}
+      {celebrationMessage && <CelebrationEffect message={plusExp} />}
       <div className="max-w-5xl mx-auto py-20">
         <header className="flex justify-center items-center">
           <Header />

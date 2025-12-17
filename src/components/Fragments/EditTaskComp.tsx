@@ -229,7 +229,7 @@ export function EditTaskComp({ taskId }: { taskId: string }) {
                                       setOpen(false);
                                     }
                                   }}
-                                  className="w-full"
+                                  className="w-full bg-orange-500 hover:bg-orange-600 cursor-pointer"
                                 >
                                   Done
                                 </Button>

@@ -114,7 +114,7 @@ export function AddTaskComp() {
                         type="text"
                         placeholder="e.g. , Web Programming 2 Chap 5"
                         {...field}
-                        className="rounded-sm bg-white/10 backdrop-blur-md border border-white/20 placeholder:text-muted"
+                        className="rounded-sm bg-white/10 backdrop-blur-md border border-white/20 placeholder:text-muted "
                       />
                     </FormControl>
                     <FormMessage />
@@ -211,7 +211,7 @@ export function AddTaskComp() {
                                   value={time}
                                 />
                                 <Button
-                                  className="w-full"
+                                  className="w-full bg-orange-500 hover:bg-orange-600 cursor-pointer"
                                   onClick={() => {
                                     if (date) {
                                       const deadlineString = `${format(

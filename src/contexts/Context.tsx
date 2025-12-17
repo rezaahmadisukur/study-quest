@@ -7,8 +7,8 @@ import {
 } from "react";
 
 interface IContext {
-  isCompleteTask: boolean;
-  setIsCompleteTask: Dispatch<SetStateAction<boolean>>;
+  celebrationMessage: boolean;
+  setCelebrationMessage: Dispatch<SetStateAction<boolean>>;
   plusExp: number;
   setPlusExp: Dispatch<SetStateAction<number>>;
 }
@@ -19,19 +19,19 @@ interface IChildren {
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const Context = createContext<IContext>({
-  isCompleteTask: false,
-  setIsCompleteTask: () => {},
+  celebrationMessage: false,
+  setCelebrationMessage: () => {},
   plusExp: 0,
   setPlusExp: () => {}
 });
 
 const ContextProvider = ({ children }: IChildren) => {
-  const [isCompleteTask, setIsCompleteTask] = useState<boolean>(false);
+  const [celebrationMessage, setCelebrationMessage] = useState<boolean>(false);
   const [plusExp, setPlusExp] = useState<number>(0);
 
   const ContextValue: IContext = {
-    isCompleteTask,
-    setIsCompleteTask,
+    celebrationMessage,
+    setCelebrationMessage,
     plusExp,
     setPlusExp
   };

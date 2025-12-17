@@ -21,8 +21,8 @@ const AchievementsComp = ({ achievements }: { achievements: [] }) => {
               key={item.id}
               className={`w-full flex flex-col justify-center items-center p-5 rounded-xl gap-1 relative overflow-hidden ${
                 item.unlocked
-                  ? "bg-fuchsia-950/20 opacity-100 shadow-xl inset-shadow inset-shadow-neutral-950"
-                  : "bg-fuchsia-950 opacity-50"
+                  ? "bg-fuchsia-950/20 opacity-100 shadow-xl inset-shadow inset-shadow-neutral-950 hover:scale-105 duration-300 transition-all border border-ring"
+                  : "bg-fuchsia-950 opacity-50 "
               }`}
             >
               <h1 className="text-4xl">{item.icon}</h1>

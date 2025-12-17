@@ -22,7 +22,7 @@ const TasksQuest = ({
   const sortedArray = [...tasks].sort((a, b) =>
     a.deadline.localeCompare(b.deadline)
   );
-  const { setIsCompleteTask, setPlusExp } = useContext(Context);
+  const { setCelebrationMessage, setPlusExp } = useContext(Context);
 
   const filterData = sortedArray.filter((task) => {
     const data = task.priority === selectOpt;
@@ -47,9 +47,9 @@ const TasksQuest = ({
     } else {
       setPlusExp(15);
     }
-    setIsCompleteTask((prev: boolean): boolean => !prev);
+    setCelebrationMessage((prev: boolean): boolean => !prev);
     setTimeout(() => {
-      setIsCompleteTask((prev: boolean): boolean => !prev);
+      setCelebrationMessage((prev: boolean): boolean => !prev);
     }, 2000);
   };
 
